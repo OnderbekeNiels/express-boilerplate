@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  mongo:
+    image: mongo:5.0.6
+    env_file:
+      - ./mongo.env
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongodb:/data/db

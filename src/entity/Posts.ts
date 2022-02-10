@@ -1,4 +1,5 @@
 import { Column, Entity, ObjectID, ObjectIdColumn } from "typeorm";
+import { User } from "./Users";
 
 @Entity()
 export class Post {
@@ -13,4 +14,6 @@ export class Post {
 
   @Column()
   userId: number;
+
+  author: User;
 }
