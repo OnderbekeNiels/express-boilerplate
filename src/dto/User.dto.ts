@@ -1,16 +1,13 @@
 import { Column, Entity, ObjectID, ObjectIdColumn } from "typeorm";
 
 @Entity()
-export class Post {
-  @ObjectIdColumn()
-  id: ObjectID;
+export class UserInput {
+  @Column()
+  surName: string;
 
   @Column()
-  title: string;
+  lastName: string;
 
   @Column()
-  message: string;
-
-  @Column()
-  userId: number;
+  age: number;
 }
