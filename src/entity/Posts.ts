@@ -1,5 +1,4 @@
 import { Column, Entity, ObjectID, ObjectIdColumn } from "typeorm";
-import { Comment } from "./Comments";
 
 @Entity()
 export class Post {
