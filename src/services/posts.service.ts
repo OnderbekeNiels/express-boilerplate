@@ -4,12 +4,15 @@ import { InjectRepository } from "typeorm-typedi-extensions";
 import { PostInput } from "../dto/Post.dto";
 import { Post } from "../entity/Posts";
 import { UserRepository } from "./users.service";
+import elastic from "elasticsearch";
 
 @EntityRepository(Post)
 export class PostRepository extends MongoRepository<Post> {}
 
 @Service()
 export class PostService {
+  elasticClient = elastic.Client({ host: "localhost:9200" });
+
   constructor(
     @InjectRepository()
     private readonly postRepository: PostRepository,
@@ -27,6 +30,17 @@ export class PostService {
   };
 
   create = async (post: PostInput) => {
+    // ! add to es
+    await this.elasticClient
+      .index({
+        index: "posts",
+        body: post,
+      })
+      .then((resp) => post)
+      .catch((err) => {
+        throw err;
+      });
+    // ! add to db and return
     return await this.postRepository.save(post);
   };
 
@@ -40,5 +54,20 @@ export class PostService {
       }
       resolve(result);
     });
+  };
+
+  search = async (search: any) => {
+    let query: { index: string; q?: string } = {
+      index: "posts",
+    };
+    if (search) query.q = `*${search}*`;
+    return await this.elasticClient
+      .search(query)
+      .then((resp) => {
+        return resp.hits.hits;
+      })
+      .catch((err) => {
+        throw err;
+      });
   };
 }

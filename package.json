@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/OnderbekeNiels/express-boilerplate#readme",
   "dependencies": {
+    "@elastic/elasticsearch": "^8.0.0",
     "cors": "^2.8.5",
+    "elasticsearch": "^16.7.2",
     "express": "^4.17.2",
     "mongodb": "^3.7.3",
     "reflect-metadata": "^0.1.13",

@@ -10,6 +10,7 @@ export class PostController {
     // Initialize the routes in here, like this
     this.router.get("/all", this.all);
     this.router.get("/post/user/:id", this.oneByUserId);
+    this.router.get("/search/:search", this.search);
     this.router.post("/", this.create);
   }
 
@@ -26,4 +27,9 @@ export class PostController {
     const saveItem = req.body;
     res.send(await this.postService.create(saveItem));
   };
+
+  search = async (req: Request, res: Response) => {
+    const searchField = req.params.search.toString()
+    res.send(await this.postService.search(searchField))
+  }
 }
